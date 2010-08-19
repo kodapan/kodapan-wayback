@@ -122,5 +122,49 @@ public class WaybackResponse {
     this.revision = revision;
   }
 
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
 
+    WaybackResponse that = (WaybackResponse) o;
+
+    if (content != that.content) return false;
+    if (contentLength != that.contentLength) return false;
+    if (primaryKey != that.primaryKey) return false;
+    if (!Arrays.equals(headers, that.headers)) return false;
+    if (locale != null ? !locale.equals(that.locale) : that.locale != null) return false;
+    if (request != null ? !request.equals(that.request) : that.request != null) return false;
+    if (revision != null ? !revision.equals(that.revision) : that.revision != null) return false;
+    if (statusLine != null ? !statusLine.equals(that.statusLine) : that.statusLine != null) return false;
+
+    return true;
+  }
+
+  @Override
+  public int hashCode() {
+    int result = (int) (primaryKey ^ (primaryKey >>> 32));
+    result = 31 * result + (request != null ? request.hashCode() : 0);
+    result = 31 * result + (revision != null ? revision.hashCode() : 0);
+    result = 31 * result + (statusLine != null ? statusLine.hashCode() : 0);
+    result = 31 * result + (headers != null ? Arrays.hashCode(headers) : 0);
+    result = 31 * result + (locale != null ? locale.hashCode() : 0);
+    result = 31 * result + (int) (contentLength ^ (contentLength >>> 32));
+    result = 31 * result + (int) (content ^ (content >>> 32));
+    return result;
+  }
+
+  @Override
+  public String toString() {
+    return "WaybackResponse{" +
+        "primaryKey=" + primaryKey +
+        ", request=" + request +
+        ", revision=" + revision +
+        ", statusLine=" + statusLine +
+        ", headers=" + (headers == null ? null : Arrays.asList(headers)) +
+        ", locale='" + locale + '\'' +
+        ", contentLength=" + contentLength +
+        ", content=" + content +
+        '}';
+  }
 }

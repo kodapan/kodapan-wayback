@@ -18,6 +18,8 @@ package se.kodapan.io.http.wayback;
 
 import com.sleepycat.persist.model.*;
 
+import java.util.Arrays;
+
 /**
  * @author kalle
  * @since 2010-aug-19 18:20:53
@@ -46,5 +48,30 @@ public class WaybackContent {
     this.content = content;
   }
 
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
 
+    WaybackContent content1 = (WaybackContent) o;
+
+    if (primaryKey != content1.primaryKey) return false;
+    if (!Arrays.equals(content, content1.content)) return false;
+
+    return true;
+  }
+
+  @Override
+  public int hashCode() {
+    int result = (int) (primaryKey ^ (primaryKey >>> 32));
+    result = 31 * result + (content != null ? Arrays.hashCode(content) : 0);
+    return result;
+  }
+
+  @Override
+  public String toString() {
+    return "WaybackContent{" +
+        "primaryKey=" + primaryKey +
+        '}';
+  }
 }
