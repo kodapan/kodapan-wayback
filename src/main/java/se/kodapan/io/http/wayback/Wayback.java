@@ -173,18 +173,10 @@ public class Wayback {
     WaybackResponse waybackResponse = seek(request);
 
     if (waybackResponse == null || waybackResponse.getRevision() < oldestRevision) {
-
-      httpResponse = factory(get, request);
-            
-    } else {
-
-      httpResponse = httpResponseFactory(waybackResponse);
-
+      waybackResponse = factory(get, request);
     }
 
-
-
-    return httpResponse;
+    return  httpResponseFactory(waybackResponse);
   }
 
   public HttpResponse execute(HttpPost post, Long oldestRevision) throws IOException {
@@ -229,18 +221,9 @@ public class Wayback {
     WaybackResponse waybackResponse = seek(request);
 
     if (waybackResponse == null || waybackResponse.getRevision() < oldestRevision) {
-
-      httpResponse = factory(post, request);
-
-    } else {
-
-      httpResponse = httpResponseFactory(waybackResponse);
-
+      waybackResponse = factory(post, request);
     }
-
-
-
-    return httpResponse;
+    return httpResponseFactory(waybackResponse);
   }
 
   private WaybackResponse seek(WaybackRequest request) {
@@ -260,7 +243,7 @@ public class Wayback {
   }
 
 
-  private HttpResponse factory(HttpUriRequest method, WaybackRequest request) throws IOException {
+  private WaybackResponse factory(HttpUriRequest method, WaybackRequest request) throws IOException {
     HttpResponse httpResponse;
     WaybackResponse waybackResponse;
     httpResponse = httpClient.execute(method);
@@ -280,7 +263,8 @@ public class Wayback {
     waybackResponse = waybackResponseFactory(request, httpResponse);
     waybackResponse.setContent(content.getPrimaryKey());
     waybackResponses.put(waybackResponse);
-    return httpResponse;
+
+    return waybackResponse;
   }
 
 
