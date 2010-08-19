@@ -1,0 +1,24 @@
+Apache HTTP client 4 wayback machine library persistent in a Berkeley DB.
+
+Caveats:
+
+  HTTP GET and POST only.
+  Requests are uniquely identified on URI, headers and entity content.
+
+Example usage:
+
+  Wayback wayback = new Wayback();
+  wayback.setPath(new File("target/tmp/" + System.currentTimeMillis()));
+  wayback.open();
+
+  long now = System.currentTimeMillis();
+
+  // this will send a request to Google.
+  HttpResponse response1 = wayback.execute(new HttpGet("http://www.google.com/"), now);
+
+  // this will pick up the previous request rathern than sending a request to Google.
+  HttpResponse response2 = wayback.execute(new HttpGet("http://www.google.com/"), now);
+
+  // this will send a new request to Google.
+  now = System.currentTimeMillis();
+  HttpResponse response1 = wayback.execute(new HttpGet("http://www.google.com/"), now);
