@@ -310,31 +310,32 @@ public class Wayback {
 
     // headers
     waybackResponse.setHeaders(new WaybackHeader[httpResponse.getAllHeaders().length]);
-    for (int i = 0; i < httpResponse.getAllHeaders().length; i++) {
-      Header header = httpResponse.getAllHeaders()[i];
+    for (int headerIndex = 0; headerIndex < httpResponse.getAllHeaders().length; headerIndex++) {
+      Header header = httpResponse.getAllHeaders()[headerIndex];
       WaybackHeader waybackHeader = new WaybackHeader();
       waybackHeader.setName(header.getName());
       waybackHeader.setValue(header.getValue());
       if (header.getElements() != null) {
         waybackHeader.setElements(new WaybackHeaderElement[header.getElements().length]);
-        for (int i2 = 0; i2 < header.getElements().length; i2++) {
-          HeaderElement headerElement = header.getElements()[i2];
+        for (int elementIndex = 0; elementIndex < header.getElements().length; elementIndex++) {
+          HeaderElement headerElement = header.getElements()[elementIndex];
           WaybackHeaderElement waybackHeaderElement = new WaybackHeaderElement();
           waybackHeaderElement.setName(headerElement.getName());
           waybackHeaderElement.setValue(headerElement.getValue());
           if (headerElement.getParameterCount() > 0) {
             waybackHeaderElement.setParameters(new WaybackNameValuePair[headerElement.getParameterCount()]);
-            for (NameValuePair parameter : headerElement.getParameters()) {
+            for (int parameterIndex = 0; parameterIndex < headerElement.getParameterCount(); parameterIndex++) {
+              NameValuePair parameter = headerElement.getParameter(parameterIndex);
               WaybackNameValuePair waybackParameter = new WaybackNameValuePair();
               waybackParameter.setName(parameter.getName());
               waybackParameter.setValue(parameter.getValue());
-              waybackHeaderElement.getParameters()[i2] = waybackParameter;
+              waybackHeaderElement.getParameters()[parameterIndex] = waybackParameter;
             }
           }
-          waybackHeader.getElements()[i2] = waybackHeaderElement;
+          waybackHeader.getElements()[elementIndex] = waybackHeaderElement;
         }
       }
-      waybackResponse.getHeaders()[i] = waybackHeader;
+      waybackResponse.getHeaders()[headerIndex] = waybackHeader;
     }
 
     return waybackResponse;
