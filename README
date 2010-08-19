@@ -1,3 +1,5 @@
+Released under the Apache Software Licence 2.0
+
 Apache HTTP client 4 wayback machine library persistent in a Berkeley DB.
 
 Caveats:
