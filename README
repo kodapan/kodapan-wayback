@@ -23,4 +23,6 @@ Example usage:
 
   // this will send a new request to Google.
   now = System.currentTimeMillis();
-  HttpResponse response1 = wayback.execute(new HttpGet("http://www.google.com/"), now);
+  HttpResponse response3 = wayback.execute(new HttpGet("http://www.google.com/"), now);
+    
+  wayback.close();
